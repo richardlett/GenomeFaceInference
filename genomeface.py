@@ -152,10 +152,9 @@ def calc_depths(depth_input,num_columns,numcontigs, min_contig_length):
             # names.extend(chunk[chunk['contigLen'] >= 1500].iloc[:,0])
 
             if used == numcontigs:
-                break #FIXME 
-            #df = pd.concat([df, chunk[chunk['contigLen'] >= 1500].iloc[:,range(3,num_columns,2)]], ignore_index=True)
+                break
     row_sums = arr.sum()
-    return arr#*.1#row_sums/(num_samples*numcontigs))
+    return arr
 
 class DisJointSets():
     def __init__(self,N):
@@ -425,7 +424,7 @@ def assemble_model(n_samples, weight_file='best_val_loss3.m'):
     model_adb_eval = Model([Input(shape=(136,)),*kmer_inputs, depth_input], y)
     model_adb_eval.compile()
     path_weight = os.path.join(conda_prefix,"share","genomeface","weights","model9_eval.m")
-    model_adb_eval.load_weights(path_weight)#"/pscratch/sd/r/richardl/camisets2/model/model9_air_oral_eval.m")
+    model_adb_eval.load_weights(path_weight)
     
     # Compositional model
     x = layers.Concatenate()(kmer_inputs)
@@ -444,7 +443,7 @@ def assemble_model(n_samples, weight_file='best_val_loss3.m'):
     model3 = Model([Input(shape=(136,)),*kmer_inputs, depth_input], x)
     model3.compile()
     path_weight = os.path.join(conda_prefix,"share","genomeface","weights","general_t2eval.m")
-    model3.load_weights(path_weight)#"/pscratch/sd/r/richardl/trainings/genearl/general_t2eval.m")
+    model3.load_weights(path_weight)
     
     return model_adb_eval, model3
     
@@ -627,10 +626,6 @@ def main(input_file, abundance_file, markers_file, output_folder, min_contig_len
             msg("Guess", calc_alpha(num_samples),"Optimized Alpha", opt_alpha)
 
 
-        # for device in cuda.gpus:
-        #     #device = cuda.select_device(i)
-        #     device.reset()
-            # print(cuda.peek_at_error())
         del clusterer
 
 
